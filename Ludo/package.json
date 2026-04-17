@@ -1,0 +1,20 @@
+{
+    "name": "ludo-master",
+    "version": "2.0.0",
+    "description": "Futuristic Ludo Game - Created and Owned by Mubin Makwa",
+    "author": "Mubin Makwa",
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "start": "npx serve .",
+        "dev": "npx live-server --port=3000",
+        "build:android": "npx cap add android && npx cap sync",
+        "build:ios": "npx cap add ios && npx cap sync"
+    },
+    "dependencies": {
+        "@capacitor/core": "^5.0.0",
+        "@capacitor/cli": "^5.0.0",
+        "@capacitor/android": "^5.0.0",
+        "@capacitor/ios": "^5.0.0"
+    }
+}

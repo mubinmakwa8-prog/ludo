@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUDO MASTER | By Mubin Makwa</title>
+    <meta name="description" content="Futuristic Ludo Game - Owned by Mubin Makwa">
+    <meta name="author" content="Mubin Makwa">
+    <meta name="theme-color" content="#0a0a2e">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader-content">
+            <div class="logo-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="logo-text">LM</div>
+            </div>
+            <h1 class="loading-title">LUDO MASTER</h1>
+            <div class="loading-bar">
+                <div class="loading-fill" id="loadingFill"></div>
+            </div>
+            <p class="loading-subtitle">© Mubin Makwa | All Rights Reserved</p>
+        </div>
+    </div>
+    <div id="mainMenu" class="screen hidden">
+        <div class="menu-container">
+            <div class="menu-header">
+                <div class="neon-border">
+                    <h1 class="game-title">
+                        <span class="title-glow">LUDO</span>
+                        <span class="title-accent">MASTER</span>
+                    </h1>
+                </div>
+                <p class="subtitle">FUTURISTIC EDITION</p>
+            </div>
+
+            <div class="menu-options">
+                <button class="menu-btn" id="btn2Players" onclick="startGame(2)">
+                    <span class="btn-icon">👥</span>
+                    <span class="btn-text">2 Players</span>
+                    <span class="btn-glow"></span>
+                </button>
+                <button class="menu-btn" id="btn3Players" onclick="startGame(3)">
+                    <span class="btn-icon">👥</span>
+                    <span class="btn-text">3 Players</span>
+                    <span class="btn-glow"></span>
+                </button>
+                <button class="menu-btn" id="btn4Players" onclick="startGame(4)">
+                    <span class="btn-icon">👥</span>
+                    <span class="btn-text">4 Players</span>
+                    <span class="btn-glow"></span>
+                </button>
+                <button class="menu-btn secondary" onclick="toggleSettings()">
+                    <span class="btn-icon">⚙️</span>
+                    <span class="btn-text">Settings</span>
+                    <span class="btn-glow"></span>
+                </button>
+                <button class="menu-btn secondary" onclick="showRules()">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">How to Play</span>
+                    <span class="btn-glow"></span>
+                </button>
+            </div>
+
+            <div class="menu-footer">
+                <p>🎮 Created & Owned by <strong>Mubin Makwa</strong></p>
+                <p class="version">v2.0.0 | All Rights Reserved</p>
+            </div>
+        </div>
+    </div>
+    <div id="settingsPanel" class="panel hidden">
+        <div class="panel-content">
+            <h2 class="panel-title">⚙️ SETTINGS</h2>
+            <div class="setting-item">
+                <label>🔊 Sound Effects</label>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>🎵 Music</label>
+                <label class="switch">
+                    <input type="checkbox" id="musicToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>✨ Animations</label>
+                <label class="switch">
+                    <input type="checkbox" id="animToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="setting-item">
+                <label>🤖 AI Difficulty</label>
+                <select id="aiDifficulty" class="futuristic-select">
+                    <option value="easy">Easy</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <button class="menu-btn" onclick="toggleSettings()">
+                <span class="btn-text">Close</span>
+            </button>
+        </div>
+    </div>
+    <div id="rulesPanel" class="panel hidden">
+        <div class="panel-content">
+            <h2 class="panel-title">📖 HOW TO PLAY</h2>
+            <div class="rules-text">
+                <div class="rule-item">
+                    <span class="rule-num">01</span>
+                    <p>Roll a <strong>6</strong> to move a token out of the base.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">02</span>
+                    <p>Move your tokens clockwise around the board.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">03</span>
+                    <p>Land on an opponent's token to send it back to base.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">04</span>
+                    <p>Get all 4 tokens to the center to win!</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">05</span>
+                    <p>Rolling a 6 gives you an extra turn.</p>
+                </div>
+                <div class="rule-item">
+                    <span class="rule-num">06</span>
+                    <p>Star positions (★) are safe zones.</p>
+                </div>
+            </div>
+            <button class="menu-btn" onclick="showRules()">
+                <span class="btn-text">Close</span>
+            </button>
+        </div>
+    </div>
+    <div id="gameScreen" class="screen hidden">
+        <div class="game-hud">
+            <div class="hud-left">
+                <button class="hud-btn" onclick="showPauseMenu()" aria-label="Pause game">☰</button>
+                <span class="turn-indicator" id="turnIndicator">Player 1's Turn</span>
+            </div>
+            <div class="hud-right">
+                <div class="score-display" id="scoreDisplay"></div>
+            </div>
+        </div>
+        <div class="board-container">
+            <canvas id="gameBoard"></canvas>
+            <div class="dice-container" id="diceContainer">
+                <div class="dice" id="dice" onclick="rollDice()" role="button" aria-label="Roll dice" tabindex="0">
+                    <div class="dice-face" id="diceFace">
+                        <span class="dice-value">🎲</span>
+                    </div>
+                    <div class="dice-glow"></div>
+                </div>
+                <p class="dice-instruction" id="diceInstruction">Tap to Roll</p>
+            </div>
+        </div>
+
+        <!-- Player Panels -->
+        <div class="player-panels" id="playerPanels"></div>
+    </div>
+    <div id="pauseMenu" class="overlay hidden">
+        <div class="overlay-content">
+            <h2 class="panel-title">⏸️ PAUSED</h2>
+            <button class="menu-btn" onclick="resumeGame()">
+                <span class="btn-icon">▶️</span>
+                <span class="btn-text">Resume</span>
+            </button>
+            <button class="menu-btn" onclick="restartGame()">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text">Restart</span>
+            </button>
+            <button class="menu-btn secondary" onclick="quitToMenu()">
+                <span class="btn-icon">🏠</span>
+                <span class="btn-text">Main Menu</span>
+            </button>
+        </div>
+    </div>
+    <div id="victoryScreen" class="overlay hidden">
+        <canvas id="confettiCanvas"></canvas>
+        <div class="victory-content">
+            <div class="trophy-container">
+                <div class="trophy">🏆</div>
+                <div class="trophy-glow"></div>
+            </div>
+            <h1 class="victory-title" id="victoryTitle">VICTORY!</h1>
+            <p class="victory-player" id="victoryPlayer">Player 1 Wins!</p>
+            <div class="victory-stats" id="victoryStats"></div>
+            <div class="victory-buttons">
+                <button class="menu-btn" onclick="restartGame()">
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Play Again</span>
+                </button>
+                <button class="menu-btn secondary" onclick="quitToMenu()">
+                    <span class="btn-icon">🏠</span>
+                    <span class="btn-text">Main Menu</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="toastContainer" class="toast-container" role="status" aria-live="polite"></div>
+    <div class="copyright-bar">
+        © 2024 Mubin Makwa | LUDO MASTER™ | All Rights Reserved
+    </div>
+    <script src="animations.js"></script>
+    <script src="game.js"></script>
+    <script src="board.js"></script>
+    <script src="player.js"></script>
+    <script src="dice.js"></script>
+    <script src="sw.js"></script>
+</body>
+</html>
